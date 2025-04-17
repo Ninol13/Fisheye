@@ -1,0 +1,84 @@
+@import url("photographer.css");
+
+body {
+    font-family: "DM Sans", sans-serif;
+    margin: 0;
+}
+
+
+header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 90px;
+}
+
+h1 {
+    color: #901C1C;
+    margin-right: 100px;
+}
+
+.logo {
+    height: 50px;
+    margin-left: 100px;
+}
+
+.photographer_section {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 70px;
+    margin-top: 100px;
+}
+
+.photographer_section article {
+    justify-self: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.photographer_section article img {
+    height: 200px;
+    width: 200px;
+    display: block;
+    margin: 0 auto 16px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.photographer_section article h2 {
+    color: #D3573C;
+    font-size: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.photographer-location {
+    font-size: 18px;
+    color: #ad3838;
+    margin-top: -17px;
+}
+
+.photographer-tagline {
+font-size: 14px;
+font-style: italic;
+margin-top: -15px;
+}
+
+.photographer-price {
+font-size: 14px;
+color: #5a5a5a;
+margin-top: -11px;
+}
+
+.photographer-portrait {
+    width: 200px;       /* ou la taille voulue */
+    height: 200px;
+    object-fit: cover;  /* pour recadrer proprement si nécessaire */
+    border-radius: 50%; /* pour un effet rond, si tu veux */
+    margin-bottom: 16px;
+}
