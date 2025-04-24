@@ -15,7 +15,10 @@
       <div class="photograph-header">
         <button class="contact_button" onclick="displayModal()">Contactez-moi</button>
       </div>
+      <section class="media-gallery" aria-label="Galerie de médias">
+      </section>
     </main>
+    <aside class="photographer-price-box" aria-label="Tarif journalier"></aside>
     <div id="contact_modal">
 			<div class="modal">
 				<header>
@@ -31,7 +34,16 @@
 				</form>
 			</div>
 		</div>
-    <script src="/scripts/pages/photographer.js"></script>
-    <script src="/scripts/utils/contactForm.js"></script>
+    <script type="module" src="scripts/pages/photographer.js"></script>
+    <script type="module" src="scripts/utils/contactForm.js"></script>
+    <aside class="sticky-summary" role="complementary" aria-label="Résumé des likes et tarif">
+      <div class="likes-summary">
+        <span class="total-likes-count">680</span>
+        <span aria-hidden="true">❤</span>
+      </div>
+      <div class="price-summary">
+        <span class="photographer-rate">400€</span> / jour
+      </div>
+    </aside>
   </body>
 </html>

@@ -1,9 +1,9 @@
-async function getPhotographers() {
+import { photographerTemplate } from '../templates/photographer.js';
+
+export async function getPhotographers() {
     try {
-        // Remplacer le chemin par celui de votre fichier JSON
         const response = await fetch('data/photographers.json');
 
-        // Vérifiez que la réponse est correcte
         if (!response.ok) {
             throw new Error(`Erreur lors de la récupération des données : ${response.statusText}`);
         }
@@ -14,7 +14,7 @@ async function getPhotographers() {
         // Affichage dans la console pour vérification
         console.log("Données récupérées :", data);
 
-        // Retourner les données (en supposant qu'elles sont structurées sous une clé "photographers")
+        // Retourner les données
         return data;
     } catch (error) {
       console.error("Erreur dans getPhotographers :", error);
@@ -37,4 +37,6 @@ async function init() {
     displayData(photographers);
 }
 
-init();
+if (document.querySelector('.photographer_section')) {
+    init();
+  }
