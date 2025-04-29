@@ -1,4 +1,3 @@
-// scripts/templates/media.js
 export function mediaFactory(item, photographer) {
     const { image, video, title, likes: initialLikes } = item;
     const folder = photographer.name.split(' ')[0].replace(/-/g, ' ');

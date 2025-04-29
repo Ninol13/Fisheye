@@ -37,6 +37,4 @@ async function init() {
     displayData(photographers);
 }
 
-if (document.querySelector('.photographer_section')) {
-    init();
-  }
+document.addEventListener('DOMContentLoaded', init);

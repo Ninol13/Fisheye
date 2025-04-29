@@ -1,4 +1,3 @@
-// scripts/pages/photographer.js
 import { getPhotographers } from './index.js';
 import { mediaFactory } from '../templates/media.js';
 
@@ -16,6 +15,8 @@ async function initPhotographerPage() {
 
   // 4. Afficher le header (infos, bouton, portrait)
   displayPhotographerHeader(photographer);
+  const contactBtn = document.querySelector('.photograph-header .contact_button');
+  contactBtn.addEventListener('click', () => displayModal(photographer.name));
 
   // 5. Afficher la galerie
   displayMediaGallery(photographerMedia, photographer);
