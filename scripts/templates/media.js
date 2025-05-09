@@ -1,72 +1,90 @@
+/**
+ * Créée un élément média DOM, selon qu'il s'agisse d'une image ou d'une vidéo.
+ * @param {Object} item      — Données brutes du média (image, video, title, likes).
+ * @param {string} folderName— Nom du dossier du photographe (prénom uniquement).
+ */
+
+function createMediaElement(item, folderName) {
+  const { image, video, title } = item;
+  const filename = image || video;
+  const srcPath  = `assets/media/${folderName}/${filename}`;
+
+  if (image) {
+    const img = document.createElement('img');
+    img.src        = srcPath;
+    img.alt        = title;
+    img.style.cursor = 'pointer';
+    return img;
+  } else {
+    const videoEl = document.createElement('video');
+    videoEl.muted = true;
+    videoEl.loop  = true;
+    videoEl.style.cursor = 'pointer';
+    const src = document.createElement('source');
+    src.src  = srcPath;
+    src.type = 'video/mp4';
+    videoEl.appendChild(src);
+    return videoEl;
+  }
+}
+
+/**
+ * Factory Method : construit la carte média complète (<article>),
+ * avec vignette image/vidéo, titre et bouton de like
+ */
 export function mediaFactory(item, photographer) {
-    const { image, video, title, likes: initialLikes } = item;
-    const folder = photographer.name.split(' ')[0].replace(/-/g, ' ');
-    const filename = image || video;
-    const mediaPath = `assets/media/${folder}/${filename}`;
+  const { title, likes: initialLikes } = item;
+  const folderName = photographer.name.split(' ')[0].replace(/-/g, ' ');
 
-    function getMediaCardDOM() {
-        let likesCount = initialLikes;
-        let hasLiked = false;
+  function getMediaCardDOM() {
+    let likesCount = initialLikes;
+    let hasLiked   = false;
 
-        const article = document.createElement('article');
-        article.className = 'media-card';
+    const article = document.createElement('article');
+    article.className = 'media-card';
 
-        // 1. Média (image ou vidéo)
-        let mediaEl;
-        if (image) {
-            mediaEl = document.createElement('img');
-            mediaEl.src = mediaPath;
-            mediaEl.alt = title;
-        } else {
-            mediaEl = document.createElement('video');
-            mediaEl.setAttribute('controls', '');
-            const src = document.createElement('source');
-            src.src = mediaPath;
-            mediaEl.appendChild(src);
-        }
-        article.appendChild(mediaEl);
+    // 1. Preview média (image ou vidéo)
+    const mediaEl = createMediaElement(item, folderName);
+    article.appendChild(mediaEl);
 
-        // 2. Bloc info
-        const info = document.createElement('div');
-        info.className = 'media-info';
+    // 2. Bloc info (titre + bouton like)
+    const info = document.createElement('div');
+    info.className = 'media-info';
 
-        const titleEl = document.createElement('h3');
-        titleEl.textContent = title;
-        titleEl.tabIndex = 0;
+    const titleEl = document.createElement('h3');
+    titleEl.textContent = title;
+    titleEl.tabIndex   = 0;
 
-        const likeBtn = document.createElement('button');
-        likeBtn.className = 'like-button';
+    const likeBtn = document.createElement('button');
+    likeBtn.className     = 'like-button';
+    likeBtn.setAttribute('aria-pressed', 'false');
+    likeBtn.setAttribute('aria-label', `J’aime ${title}`);
+    likeBtn.textContent   = `${likesCount} ❤`;
+
+    likeBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      if (!hasLiked) {
+        likesCount++;
+        likeBtn.setAttribute('aria-pressed', 'true');
+      } else {
+        likesCount--;
         likeBtn.setAttribute('aria-pressed', 'false');
-        likeBtn.setAttribute('aria-label', `J’aime ${title}`);
-        likeBtn.textContent = `${likesCount} ❤`;
+      }
+      hasLiked = !hasLiked;
+      likeBtn.textContent = `${likesCount} ❤`;
 
-        // 3. Gestion du clic = toggle
-        likeBtn.addEventListener('click', () => {
-            if (!hasLiked) {
-            likesCount++;
-            likeBtn.setAttribute('aria-pressed', 'true');
-            } else {
-            likesCount--;
-            likeBtn.setAttribute('aria-pressed', 'false');
-            }
-            hasLiked = !hasLiked;
-            likeBtn.textContent = `${likesCount} ❤`;
+      const totalEl = document.querySelector('.total-likes-count');
+      if (totalEl) {
+        const current = parseInt(totalEl.textContent, 10);
+        totalEl.textContent = current + (hasLiked ? 1 : -1);
+      }
+    });
 
-            // Mise à jour du total des likes dans le sticky summary
-            const totalLikesEl = document.querySelector('.total-likes-count');
-            if (totalLikesEl) {
-            const delta = hasLiked ? +1 : -1;
-            const currentTotal = parseInt(totalLikesEl.textContent, 10);
-            totalLikesEl.textContent = currentTotal + delta;
-            }
-        });
+    info.append(titleEl, likeBtn);
+    article.appendChild(info);
 
-        info.appendChild(titleEl);
-        info.appendChild(likeBtn);
-        article.appendChild(info);
+    return article;
+  }
 
-        return article;
-    }
-
-    return { getMediaCardDOM };
+  return { getMediaCardDOM };
 }

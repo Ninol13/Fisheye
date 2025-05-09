@@ -23,13 +23,17 @@ export async function getPhotographers() {
 
 async function displayData(photographers) {
     const photographersSection = document.querySelector(".photographer_section");
-
-    photographers.forEach((photographer) => {
+    if (!photographersSection) {
+        // On est sur une page sans section à remplir : on arrête tout
+        return;
+    }
+    photographers.forEach(photographer => {
         const photographerModel = photographerTemplate(photographer);
         const userCardDOM = photographerModel.getUserCardDOM();
         photographersSection.appendChild(userCardDOM);
     });
 }
+
 
 async function init() {
     // Récupère les datas des photographes

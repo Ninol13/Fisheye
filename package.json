@@ -1,0 +1,26 @@
+{
+  "name": "fisheye_litim_nino",
+  "version": "1.0.0",
+  "description": "FishEye - Prototype Dynamique",
+  "main": "index.js",
+  "scripts": {
+   "dev": "http-server",
+   "lint": "eslint ./scripts/**/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ninol13/Fisheye.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ninol13/Fisheye/issues"
+  },
+  "homepage": "https://github.com/Ninol13/Fisheye#readme",
+  "devDependencies": {
+    "@eslint/js": "^9.26.0",
+    "eslint": "^9.26.0",
+    "globals": "^16.0.0"
+  }
+}
