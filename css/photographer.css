@@ -325,11 +325,15 @@ form input {
     background-color: #901C1C;
     color: #fff;
     border: none;
-    border-radius: 5px 5px 0 0;
+    border-radius: 5px;
     padding: 10px 27px;
     font-size: 1rem;
     cursor: pointer;
     box-sizing: border-box;
+}
+
+.selector__toggle[aria-expanded="true"] {
+    border-radius: 5px 5px 0 0;
 }
 
 .selector__toggle span.material-icons {
