@@ -33,12 +33,17 @@ function createMediaElement(item, folderName) {
  * avec vignette image/vidéo, titre et bouton de like
  */
 export function mediaFactory(item, photographer) {
-  const { title, likes: initialLikes } = item;
-  const folderName = photographer.name.split(' ')[0].replace(/-/g, ' ');
+  const { title } = item;
+  const folderName = photographer.name.split(' ')[0];
+
+  // initialise l’état liked sur l’objet pour persister
+  if (typeof item.liked === 'undefined') {
+    item.liked = false;
+  }
 
   function getMediaCardDOM() {
-    let likesCount = initialLikes;
-    let hasLiked   = false;
+    // on lit toujours la valeur courante dans item.likes
+    let likesCount = item.likes;
 
     const article = document.createElement('article');
     article.className = 'media-card';
@@ -57,26 +62,31 @@ export function mediaFactory(item, photographer) {
 
     const likeBtn = document.createElement('button');
     likeBtn.className     = 'like-button';
-    likeBtn.setAttribute('aria-pressed', 'false');
+    likeBtn.setAttribute('aria-pressed', String(item.liked));
     likeBtn.setAttribute('aria-label', `J’aime ${title}`);
     likeBtn.textContent   = `${likesCount} ❤`;
 
     likeBtn.addEventListener('click', e => {
       e.stopPropagation();
-      if (!hasLiked) {
-        likesCount++;
-        likeBtn.setAttribute('aria-pressed', 'true');
+
+      // toggle du like et mise à jour persistante
+      if (!item.liked) {
+        item.likes++;
       } else {
-        likesCount--;
-        likeBtn.setAttribute('aria-pressed', 'false');
+        item.likes--;
       }
-      hasLiked = !hasLiked;
+      item.liked = !item.liked;
+
+      // mise à jour du bouton et du compteur local
+      likesCount = item.likes;
+      likeBtn.setAttribute('aria-pressed', String(item.liked));
       likeBtn.textContent = `${likesCount} ❤`;
 
+      // mise à jour du total global…
       const totalEl = document.querySelector('.total-likes-count');
       if (totalEl) {
         const current = parseInt(totalEl.textContent, 10);
-        totalEl.textContent = current + (hasLiked ? 1 : -1);
+        totalEl.textContent = item.liked ? current + 1 : current - 1;
       }
     });
 

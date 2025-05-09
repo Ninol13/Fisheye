@@ -223,7 +223,7 @@ function displayMediaGallery(arr, photographer) {
 function initStickySummary(arr, photographer) {
   const total = arr.reduce((sum,m)=>sum+m.likes,0);
   document.querySelector('.total-likes-count').textContent = total;
-  document.querySelector('.photographer-rate').textContent = `${photographer.price}€/jour`;
+  document.querySelector('.photographer-rate').textContent = `${photographer.price}€`;
 }
 
 initPhotographerPage();
